@@ -1,6 +1,7 @@
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = (env, options) => {
 	console.log(env, options);
@@ -53,17 +54,21 @@ module.exports = (env, options) => {
 			],
 		},
 		plugins: [
-			new VueLoaderPlugin(),
 			new HtmlPlugin({
 				template: './src/index.html',
 			}),
 			new CopyPlugin({
 				patterns: [{ from: 'static' }],
 			}),
+			new VueLoaderPlugin(),
+			new Dotenv(),
 		],
+
+		// 개발 서버 옵션
 		devServer: {
-			// port: 8080,
-			historyApiFallback: true,
+			host: 'localhost',
+			port: 8079,
+			hot: true,
 		},
 	};
 };
